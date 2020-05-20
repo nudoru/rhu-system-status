@@ -2,7 +2,7 @@
 
 <template>
   <main class="app">
-    <Header><i class="far fa-lightbulb"></i>RHU Vue App Starter</Header>
+    <Header><h1><i class="far fa-lightbulb"></i>RHU</h1><h2>System Availability</h2></Header>
 <!--    <Hero/>-->
     <Content>
       <router-view />
@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import Header from './components/Header.vue';
-import Hero from "./components/Hero";
-import Content from "./components/Content";
-import Footer from "./components/Footer";
+import Header from './components/layout/Header.vue';
+import Hero from "./components/layout/Hero";
+import Content from "./components/layout/Content";
+import Footer from "./components/layout/Footer";
 
 export default {
   name: 'App',
@@ -31,6 +31,6 @@ export default {
   methods: {},
   mounted() {
     console.log('App mounted');
-  },
+  }
 };
 </script>

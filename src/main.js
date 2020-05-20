@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueDummy from 'vue-dummy'
+import Vue from 'vue';
+import VueDummy from 'vue-dummy';
 
 import App from './App.vue'
 import router from './router'

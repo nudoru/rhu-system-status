@@ -3,12 +3,13 @@
 <template>
     <section role="banner" class="app-header">
         <div class="container-horizontal">
-            <div class="start">
-                <h1><slot></slot></h1>
+            <div>
+                <slot></slot>
             </div>
             <div class="end">
                 <nav class="app-navigation-primary">
                     <ul class="">
+                        <li class="note"><i class="fa fa-info-circle"></i>Nav is for dev only</li>
                         <li :class="{'active': routeRoot === splitRoute(route.path)}" v-for="(route, idx) in this.$router.options.routes" :key="idx">
                             <router-link class="" :to="route.path" >
                                 {{route.name}}

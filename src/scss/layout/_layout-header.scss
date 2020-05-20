@@ -10,9 +10,22 @@
   .container-horizontal {
     h1 {
       @extend .h5;
+      display: inline;
       margin: 0;
       i[class^='fa'] {
         margin-right: $base-value;
+      }
+    }
+    h2 {
+      @extend .h5;
+      display: inline;
+      margin: 0 0 0 $base-value;
+      color: $primary-color;
+      &::before {
+        content:'\/';
+        margin-right: $base-value;
+        font-weight: $font-weight-light;
+        color: $neutral-color-dark;
       }
     }
     p {
@@ -47,6 +60,15 @@
             padding-right: $base-value-quarter;
             color: $neutral-color-dark;
             content: '|';
+          }
+          &.note {
+            color: $neutral-color;
+            i[class^='fa'] {
+              margin-right: $base-value-half;
+            }
+            &::after {
+              content: '';
+            }
           }
         }
       }
