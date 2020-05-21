@@ -7,6 +7,7 @@
   position: sticky;
   top: 0;
   z-index: $zindex-header;
+  min-height: 51px; // contain mobile menu button
   .container-horizontal {
     .end {
       flex: unset;

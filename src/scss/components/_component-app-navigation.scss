@@ -1,68 +1,30 @@
 .app-navigation-primary {
+  @include transition-all();
   position: relative;
 
-  // label
+  &.open {
+    transform: translateX(-300px);
+    .mobile-toggle {
+      transform: translateX(300px);
+    }
+  }
+
+  &.closed {
+    transform: translateX(0);
+    .mobile-toggle {
+      transform: translateX(0);
+    }
+  }
+
+  // button
   .mobile-toggle {
-    @include transition-all();
     display: none;
     background-color: #000;
     border: none;
     font-size: 1rem;
     padding: $base-value;
-    border-radius: $radius-base;
     &:hover {
       background-color: $grey7;
-    }
-  }
-
-  //input checkbox
-  #nav-mobile-toggle {
-    display: none;
-  }
-
-  @include mq("tablet-wide", max) {
-    .mobile-toggle {
-      display: block;
-      position: relative;
-      right: 0;
-    }
-
-    #nav-mobile-toggle:checked + .navigation-list {
-      display: block;
-    }
-
-    .navigation-list {
-      display: none;
-      ul {
-        width: 250px;
-        background-color: $grey8;
-        position: absolute;
-        right: 0px;
-        border-radius: $radius-base;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.05),
-          4px 23px 40px -15px rgba(0, 0, 0, 0.15),
-          8px 30px 64px rgba(0, 0, 0, 0.1);
-
-        li {
-          display: block;
-          text-align: left;
-
-          a {
-            width: 100%;
-          }
-
-          &.active {
-            a {
-              border-bottom: none;
-              border-left: 5px solid $primary-color;
-            }
-          }
-
-          &:not(:last-child):after {
-            display: none;
-          }
-        }
-      }
     }
   }
 
@@ -114,6 +76,57 @@
 
           &::after {
             content: "";
+          }
+        }
+      }
+    }
+  }
+
+  @include mq("tablet-wide", max) {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    .mobile-toggle {
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .navigation-list {
+      position: absolute;
+      top: 51px;
+      left: 50px;
+      width: 300px;
+      background: linear-gradient(-20deg, $grey7, $grey8);
+      height: calc(100vh - 51px);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.05),
+        4px 23px 40px -15px rgba(0, 0, 0, 0.15),
+        8px 30px 64px rgba(0, 0, 0, 0.1);
+
+      ul {
+        width: 100%;
+        li {
+          display: block;
+          text-align: left;
+
+          &.note {
+            font-size: 1rem;
+          }
+
+          a {
+            width: 100%;
+            font-size: 1rem;
+          }
+          &.active {
+            a {
+              border-bottom: none;
+              border-left: 5px solid $primary-color;
+            }
+          }
+
+          &:not(:last-child):after {
+            display: none;
           }
         }
       }
