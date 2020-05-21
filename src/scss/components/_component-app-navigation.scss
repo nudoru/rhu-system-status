@@ -1,0 +1,106 @@
+.app-navigation-primary {
+  @extend .tabs;
+  position: relative;
+  margin: 0;
+  border-bottom: none;
+
+  // label
+  .mobile-toggle {
+    @include transition-all();
+    display: none;
+    background-color: #000;
+    border: none;
+    font-size: 1rem;
+    padding: $base-value;
+    border-radius: $radius-base;
+    &:hover {
+      background-color: $grey7;
+    }
+  }
+
+  //input checkbox
+  #nav-mobile-toggle {
+    display: none;
+  }
+
+  @include mq("tablet-wide", max) {
+    .mobile-toggle {
+      display: block;
+      position: relative;
+      right: 0;
+    }
+
+    #nav-mobile-toggle:checked + ul {
+      display: block;
+    }
+
+    ul {
+      display: none;
+      width: 250px;
+      background-color: $grey8;
+      position: absolute;
+      right: 0px;
+      top: 50px;
+      border-radius: $radius-base;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.05),
+        4px 23px 40px -15px rgba(0, 0, 0, 0.15),
+        8px 30px 64px rgba(0, 0, 0, 0.1);
+      li {
+        display: block;
+        text-align: left;
+        a {
+          width: 100%;
+        }
+        &.active {
+          a {
+            border-bottom: none;
+            border-left: 5px solid $primary-color;
+          }
+        }
+        &:not(:last-child):after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  ul {
+    @include transition-all();
+    text-align: right;
+    li {
+      a {
+        padding: $base-value $base-value;
+        color: $neutral-color;
+        border-bottom: 1px solid transparent;
+      }
+      a:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        text-decoration: none;
+      }
+      &.active {
+        a {
+          color: $primary-color-light;
+          border-color: $primary-color;
+          background-color: transparent;
+        }
+      }
+      &:not(:last-child):after {
+        @extend %element-tab;
+        padding-left: $base-value-quarter;
+        padding-right: $base-value-quarter;
+        color: $neutral-color-dark;
+        content: "|";
+      }
+      &.note {
+        color: $neutral-color;
+        padding: $base-value $base-value;
+        i[class^="fa"] {
+          margin-right: $base-value-half;
+        }
+        &::after {
+          content: "";
+        }
+      }
+    }
+  }
+}
