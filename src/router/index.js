@@ -1,39 +1,45 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Typography from '../views/Typography';
-import Components from '../views/Components';
-import Forms from '../views/Forms';
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Typography from "../views/Typography";
+import Components from "../views/Components";
+import Forms from "../views/Forms";
+import System from "../views/System";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path     : '/',
-    name     : 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
-    path     : '/typography',
-    name     : 'Typography',
-    component: Typography
+    path: "/system/:id",
+    name: "System",
+    component: System,
   },
   {
-    path     : '/components',
-    name     : 'Components',
-    component: Components
+    path: "/typography",
+    name: "Typography",
+    component: Typography,
   },
   {
-    path     : '/forms',
-    name     : 'Forms',
-    component: Forms
-  }
-]
+    path: "/components",
+    name: "Components",
+    component: Components,
+  },
+  {
+    path: "/forms",
+    name: "Forms",
+    component: Forms,
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

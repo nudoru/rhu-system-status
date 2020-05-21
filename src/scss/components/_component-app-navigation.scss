@@ -1,8 +1,5 @@
 .app-navigation-primary {
-  @extend .tabs;
   position: relative;
-  margin: 0;
-  border-bottom: none;
 
   // label
   .mobile-toggle {
@@ -30,75 +27,94 @@
       right: 0;
     }
 
-    #nav-mobile-toggle:checked + ul {
+    #nav-mobile-toggle:checked + .navigation-list {
       display: block;
     }
 
-    ul {
+    .navigation-list {
       display: none;
-      width: 250px;
-      background-color: $grey8;
-      position: absolute;
-      right: 0px;
-      top: 50px;
-      border-radius: $radius-base;
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.05),
-        4px 23px 40px -15px rgba(0, 0, 0, 0.15),
-        8px 30px 64px rgba(0, 0, 0, 0.1);
-      li {
-        display: block;
-        text-align: left;
-        a {
-          width: 100%;
-        }
-        &.active {
+      ul {
+        width: 250px;
+        background-color: $grey8;
+        position: absolute;
+        right: 0px;
+        border-radius: $radius-base;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.05),
+          4px 23px 40px -15px rgba(0, 0, 0, 0.15),
+          8px 30px 64px rgba(0, 0, 0, 0.1);
+
+        li {
+          display: block;
+          text-align: left;
+
           a {
-            border-bottom: none;
-            border-left: 5px solid $primary-color;
+            width: 100%;
           }
-        }
-        &:not(:last-child):after {
-          display: none;
+
+          &.active {
+            a {
+              border-bottom: none;
+              border-left: 5px solid $primary-color;
+            }
+          }
+
+          &:not(:last-child):after {
+            display: none;
+          }
         }
       }
     }
   }
 
-  ul {
-    @include transition-all();
-    text-align: right;
-    li {
-      a {
-        padding: $base-value $base-value;
-        color: $neutral-color;
-        border-bottom: 1px solid transparent;
-      }
-      a:hover {
-        background-color: rgba(255, 255, 255, 0.25);
-        text-decoration: none;
-      }
-      &.active {
+  .navigation-list {
+    @extend .tabs;
+    position: relative;
+    margin: 0;
+    border-bottom: none;
+
+    ul {
+      @include transition-all();
+      text-align: right;
+
+      li {
         a {
-          color: $primary-color-light;
-          border-color: $primary-color;
-          background-color: transparent;
+          padding: $base-value $base-value;
+          color: $neutral-color;
+          border-bottom: 1px solid transparent;
         }
-      }
-      &:not(:last-child):after {
-        @extend %element-tab;
-        padding-left: $base-value-quarter;
-        padding-right: $base-value-quarter;
-        color: $neutral-color-dark;
-        content: "|";
-      }
-      &.note {
-        color: $neutral-color;
-        padding: $base-value $base-value;
-        i[class^="fa"] {
-          margin-right: $base-value-half;
+
+        a:hover {
+          background-color: rgba(255, 255, 255, 0.25);
+          text-decoration: none;
         }
-        &::after {
-          content: "";
+
+        &.active {
+          a {
+            color: $primary-color-light;
+            border-color: $primary-color;
+            background-color: transparent;
+          }
+        }
+
+        &:not(:last-child):after {
+          @extend %element-tab;
+          padding-left: $base-value-quarter;
+          padding-right: $base-value-quarter;
+          color: $neutral-color-dark;
+          content: "|";
+        }
+
+        &.note {
+          color: $neutral-color;
+          padding: $base-value $base-value;
+
+          i[class^="fa"] {
+            margin-right: $base-value-half;
+          }
+
+          &::after {
+            content: "";
+          }
         }
       }
     }
