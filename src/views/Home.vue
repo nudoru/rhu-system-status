@@ -31,6 +31,22 @@
         </tr>
       </tbody>
     </table>
+    <Modal
+      title="Some Modal"
+      :callback="handleModalClose"
+      :controls="[
+        {
+          label: 'Close',
+          cls: 'secondary outline',
+          callback: handleModalClose,
+        },
+        { label: 'Save', callback: handleModalSave },
+      ]"
+    >
+      <div>
+        <h1>Yo! Content</h1>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -41,10 +57,11 @@ import Icon from "@/components/ui/Icon";
 import Badge from "@/components/ui/Badge";
 
 import { statusCodeToGlyph, statusCodeToString } from "../libs/utilities";
+import Modal from "../components/ui/Modal";
 
 export default {
   name: "Home",
-  components: { Icon, Badge },
+  components: { Modal, Icon, Badge },
   props: {
     p: {
       type: Boolean,
@@ -60,6 +77,12 @@ export default {
   methods: {
     statusCodeToString,
     statusCodeToGlyph,
+    handleModalClose() {
+      console.log("Modal close");
+    },
+    handleModalSave() {
+      console.log("Modal save!");
+    },
   },
 };
 </script>
