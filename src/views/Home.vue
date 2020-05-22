@@ -32,19 +32,34 @@
       </tbody>
     </table>
     <Modal
+      :visible="showModal"
       title="Some Modal"
-      :callback="handleModalClose"
+      glyph="fa fa-air-freshener"
+      status="primary"
       :controls="[
         {
           label: 'Close',
-          cls: 'secondary outline',
-          callback: handleModalClose,
+          cls: 'secondary outline link',
         },
         { label: 'Save', callback: handleModalSave },
       ]"
     >
       <div>
-        <h1>Yo! Content</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam id orci
+          elementum nisl bibendum tincidunt ac sit amet odio. Ut volutpat odio
+          eu leo pellentesque cursus. In non dui vitae turpis mollis
+          pellentesque a a erat. Phasellus sollicitudin imperdiet elit, egestas
+          blandit ante tincidunt molestie. Proin in risus metus. Suspendisse
+          eleifend nisl sit amet fringilla rhoncus. Quisque ultricies nunc orci,
+          vel laoreet quam vehicula vel. Aliquam erat volutpat. Nulla tristique
+          sem sit amet dui sollicitudin, at tristique lorem luctus. Pellentesque
+          quam ligula, consequat gravida tincidunt sit amet, ultrices porttitor
+          nisi. Nulla sodales, dui vel mollis bibendum, libero urna cursus
+          tortor, lacinia pretium diam nunc ultricies nulla. Suspendisse
+          convallis ultrices posuere. Sed diam lorem, interdum quis ornare quis,
+          vulputate a urna. Nullam rutrum blandit libero, sed lobortis ex.
+        </p>
       </div>
     </Modal>
   </div>
@@ -69,7 +84,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      showModal: true,
+    };
   },
   computed: {
     ...mapGetters(["getStatusEnum", "getSystems", "getSystemById"]),
@@ -82,6 +99,7 @@ export default {
     },
     handleModalSave() {
       console.log("Modal save!");
+      this.showModal = false;
     },
   },
 };

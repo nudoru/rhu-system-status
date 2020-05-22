@@ -1,19 +1,24 @@
 <style lang="scss" scoped></style>
 
 <template>
-  <div>
+  <div v-if="isVisible">
     <div
       class="modal-cover"
-      @click="() => (callback ? callback() : coverClick())"
+      @click="() => (coverCallback ? coverCallback() : defaultClick())"
     ></div>
-    <div class="modal">
+    <div :class="getModalCls()">
       <div class="title" v-if="title.length > 0">{{ title }}</div>
+      <div class="glyph" v-if="glyph.length > 0">
+        <Icon size="lg" :status="status" :glyph="glyph" />
+      </div>
       <div class="content">
         <slot></slot>
       </div>
       <div class="controls" v-if="controls !== null">
-        <span v-for="(button, idx) in controls" :key="idx">
+        <div class="button-group-expanded-horizontal">
           <button
+            v-for="(button, idx) in controls"
+            :key="idx"
             @click="
               () => (button.callback ? button.callback() : defaultClick())
             "
@@ -21,16 +26,19 @@
           >
             {{ button.label }}
           </button>
-        </span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { validateStatus } from "@/libs/uiComponentPropValidation.js";
+import Icon from "./Icon";
+
 export default {
   name: "Modal",
-  components: {},
+  components: { Icon },
   props: {
     title: {
       type: String,
@@ -40,27 +48,43 @@ export default {
       type: Array,
       default: null,
     },
-    callback: {
+    coverCallback: {
       type: Function,
       default: null,
+    },
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+    glyph: {
+      type: String,
+      default: "",
+    },
+    status: {
+      type: String,
+      default: "neutral",
+      validator: validateStatus,
+    },
+  },
+  watch: {
+    visible: function (newVal, oldVal) {
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+      this.isVisible = this.newVal;
     },
   },
   data() {
     return {
-      visible: false,
+      isVisible: this.visible,
     };
   },
   computed: {},
   methods: {
-    coverClick() {
-      console.log("Cover click");
-    },
     defaultClick() {
-      console.log("Default click");
+      this.isVisible = !this.isVisible;
     },
-  },
-  mounted() {
-    console.log(this.controls);
+    getModalCls() {
+      return ["modal", this.status === "neutral" ? "" : this.status].join(" ");
+    },
   },
 };
 </script>
