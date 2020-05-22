@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Typography from "../views/Typography";
-import Components from "../views/Components";
+import VueComponents from "../views/VueComponents";
 import Forms from "../views/Forms";
 import System from "../views/System";
 
@@ -26,8 +26,8 @@ const routes = [
   },
   {
     path: "/components",
-    name: "Components",
-    component: Components,
+    name: "Vue Components",
+    component: VueComponents,
   },
   {
     path: "/forms",

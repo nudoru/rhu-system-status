@@ -1,8 +1,11 @@
+@import "vendor/animate";
+
 @import "vars";
 @import "functions";
 @import "mixins";
 @import "utils";
 @import "typography";
+@import "transitions";
 @import "layout/layout-util";
 @import "layout/layout-grid-square";
 @import "components/component-common";

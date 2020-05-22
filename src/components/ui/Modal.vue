@@ -1,34 +1,39 @@
 <style lang="scss" scoped></style>
 
 <template>
-  <div v-if="isVisible">
-    <div
-      class="modal-cover"
-      @click="() => (coverCallback ? coverCallback() : defaultClick())"
-    ></div>
-    <div :class="getModalCls()">
-      <div class="title" v-if="title.length > 0">{{ title }}</div>
-      <div class="glyph" v-if="glyph.length > 0">
-        <Icon size="lg" :status="status" :glyph="glyph" />
-      </div>
-      <div class="content">
-        <slot></slot>
-      </div>
-      <div class="controls" v-if="controls !== null">
-        <div class="button-group-expanded-horizontal">
-          <button
-            v-for="(button, idx) in controls"
-            :key="idx"
-            @click="
-              () => (button.callback ? button.callback() : defaultClick())
-            "
-            :class="button.cls ? button.cls : 'primary'"
-          >
-            {{ button.label }}
-          </button>
+  <div>
+    <transition name="fade-slow">
+      <div
+        v-if="isVisible && cover"
+        class="modal-cover"
+        @click="() => (coverCallback ? coverCallback() : defaultClick())"
+      ></div>
+    </transition>
+    <transition name="fade">
+      <div :class="getModalCls()" v-if="isVisible">
+        <div class="title" v-if="title.length > 0">{{ title }}</div>
+        <div class="glyph" v-if="glyph.length > 0">
+          <Icon size="lg" :status="status" :glyph="glyph" />
+        </div>
+        <div class="content">
+          <slot></slot>
+        </div>
+        <div class="controls" v-if="controls !== null">
+          <div class="button-group-expanded-horizontal">
+            <button
+              v-for="(button, idx) in controls"
+              :key="idx"
+              @click="
+                () => (button.callback ? button.callback() : defaultClick())
+              "
+              :class="button.cls ? button.cls : 'primary'"
+            >
+              {{ button.label }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -48,6 +53,10 @@ export default {
       type: Array,
       default: null,
     },
+    cover: {
+      type: Boolean,
+      default: true,
+    },
     coverCallback: {
       type: Function,
       default: null,
@@ -66,16 +75,15 @@ export default {
       validator: validateStatus,
     },
   },
-  watch: {
-    visible: function (newVal, oldVal) {
-      console.log("Prop changed: ", newVal, " | was: ", oldVal);
-      this.isVisible = this.newVal;
-    },
-  },
   data() {
     return {
       isVisible: this.visible,
     };
+  },
+  watch: {
+    visible: function (newVal, oldVal) {
+      this.isVisible = newVal;
+    },
   },
   computed: {},
   methods: {
