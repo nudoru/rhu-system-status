@@ -9,9 +9,16 @@
   <div class="container">
     <Icon status="primary" glyph="fa fa-cog" />
     <Badge status="neutral" glyph="far fa-calendar-alt">I'm a badge!</Badge>
-    <button class="danger" @click="onShowModal">
-      <i class="fas fa-external-link-alt left"></i>Open Modal
-    </button>
+    <!--    <button class="danger" @click="onShowModal">-->
+    <!--      <i class="fas fa-external-link-alt left"></i>Open Modal-->
+    <!--    </button>-->
+    <Button
+      :onClick="onShowModal"
+      status="success"
+      glyph="fas fa-external-link-alt"
+      large
+      >Ima button</Button
+    >
     <Modal
       :visible="showModal"
       :coverCallback="onCloseModal"
@@ -52,10 +59,11 @@
 import Icon from "@/components/ui/Icon";
 import Badge from "@/components/ui/Badge";
 import Modal from "@/components/ui/Modal";
+import Button from "@/components/ui/Button";
 
 export default {
   name: "Home",
-  components: { Modal, Icon, Badge },
+  components: { Modal, Icon, Badge, Button },
   props: {
     p: {
       type: Boolean,

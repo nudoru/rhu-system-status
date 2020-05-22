@@ -9,7 +9,7 @@
 import { validateStatus } from "@/libs/uiComponentPropValidation.js";
 
 export default {
-  name: "Icon",
+  name: "Badge",
   components: {},
   props: {
     status: {
