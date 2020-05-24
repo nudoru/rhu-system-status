@@ -21,6 +21,10 @@
     "glyph content"
     "controls controls";
   flex-direction: column;
+  &.full {
+    width: 95%;
+    max-width: 95%;
+  }
   .title {
     grid-area: title;
     padding: $base-value;

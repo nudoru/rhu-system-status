@@ -65,6 +65,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    full: {
+      type: Boolean,
+      default: false,
+    },
     glyph: {
       type: String,
       default: "",
@@ -91,7 +95,11 @@ export default {
       this.isVisible = !this.isVisible;
     },
     getModalCls() {
-      return ["modal", this.status === "neutral" ? "" : this.status].join(" ");
+      return [
+        "modal",
+        this.status === "neutral" ? "" : this.status,
+        this.full ? "full" : "",
+      ].join(" ");
     },
   },
 };

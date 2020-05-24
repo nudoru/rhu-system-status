@@ -34,9 +34,9 @@
     letter-spacing: 0.05rem
     font-size: 0.8rem
     i[class^='fa'].left
-      margin-right: $table-cell-padding/2
+      margin-right: $base-value-quarter
     i[class^='fa'].right
-      margin-left: $table-cell-padding/2
+      margin-left: $base-value-quarter
 
   thead
     th
@@ -44,15 +44,15 @@
       padding: $table-cell-padding
       color: $primary-color-dark
       border-bottom: 1px solid $primary-color
-    // .th-sortable
-    //   cursor: pointer
-    // .th-selected
-    //   color: #fff
-    //   background-color: $primary-color
-    //   border-radius: $radius-base $radius-base 0 0
-    //   // additional emphasis
-    //   i.fa
-    //     color: #fff
+      &.sortable
+        cursor: pointer
+        color: $primary-color
+        background-color: $primary-color-light
+        .sort-icon
+          margin-left: $base-value
+      &.sorted
+        color: #fff
+        background-color: $primary-color
 
   tfoot
     th

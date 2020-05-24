@@ -1,5 +1,5 @@
 <template>
-  <button @click="onClick" :class="cls">
+  <button v-on="$listeners" :class="cls">
     <i v-if="glyph.length > 0" :class="glyphCls"></i>
     <slot />
   </button>
@@ -40,10 +40,6 @@ export default {
     link: {
       type: Boolean,
       default: false,
-    },
-    onClick: {
-      type: Function,
-      default: () => {},
     },
   },
   computed: {

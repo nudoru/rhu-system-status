@@ -13,7 +13,7 @@
     <!--      <i class="fas fa-external-link-alt left"></i>Open Modal-->
     <!--    </button>-->
     <Button
-      :onClick="onShowModal"
+      @click="onShowModal"
       status="success"
       glyph="fas fa-external-link-alt"
       large
@@ -25,6 +25,7 @@
       title="Some Modal"
       glyph="fa fa-air-freshener"
       status="primary"
+      full
       :controls="[
         {
           label: 'Close',

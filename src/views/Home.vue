@@ -8,29 +8,52 @@
 <template>
   <div class="container">
     <h1>System Availability</h1>
-    <table class="table auto top">
-      <tbody>
-        <tr v-for="(system, idx) in getSystems" :key="idx">
-          <td>
-            <Icon
-              :status="statusCodeToString(system.lastIncident.status)"
-              :glyph="statusCodeToGlyph(system.lastIncident.status)"
-            />
-          </td>
-          <td>
-            <router-link class="system-name" :to="'system/' + system.id">
-              {{ system.name }}
-            </router-link>
-          </td>
-          <td>
-            <p>{{ system.lastIncident.message }}</p>
-            <Badge status="neutral" glyph="far fa-calendar-alt">{{
-              system.lastIncident.date
-            }}</Badge>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <Table
+      alignTop
+      sizeAuto
+      :data="getSystems"
+      :format="[
+        {
+          heading: 'Status',
+          slot: 'status',
+          accessor: (value) => value.lastIncident.status,
+          sortable: true,
+          sortDirection: 1,
+          sorted: true,
+        },
+        {
+          heading: 'System',
+          slot: 'system',
+          accessor: (value) => value,
+        },
+        {
+          heading: 'Last Update',
+          slot: 'lastupdate',
+          accessor: (value) => value.lastIncident,
+          sortable: true,
+          sortDirection: 1,
+          sorted: false,
+        },
+      ]"
+    >
+      <template v-slot:status="{ value }">
+        <Icon
+          :status="statusCodeToString(value)"
+          :glyph="statusCodeToGlyph(value)"
+        />
+      </template>
+      <template v-slot:system="{ value }">
+        <router-link class="system-name" :to="'system/' + value.id">
+          {{ value.name }}
+        </router-link>
+      </template>
+      <template v-slot:lastupdate="{ value }">
+        <p>{{ value.message }}</p>
+        <Badge status="neutral" glyph="far fa-calendar-alt">{{
+          value.date
+        }}</Badge>
+      </template>
+    </Table>
   </div>
 </template>
 
@@ -41,10 +64,11 @@ import Icon from "@/components/ui/Icon";
 import Badge from "@/components/ui/Badge";
 
 import { statusCodeToGlyph, statusCodeToString } from "../libs/utilities";
+import Table from "../components/ui/Table";
 
 export default {
   name: "Home",
-  components: { Icon, Badge },
+  components: { Table, Icon, Badge, Table },
   props: {
     p: {
       type: Boolean,
