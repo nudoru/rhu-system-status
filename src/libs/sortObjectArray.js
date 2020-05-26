@@ -1,14 +1,5 @@
-/*
-TODO for optimizations
-  https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
-  https://listjs.com/
-  https://github.com/nwoltman/string-natural-compare
-  https://www.npmjs.com/package/fast-sort
-  http://numeraljs.com/
- */
-
 import moment from "moment";
-import { path, sort } from "ramda";
+import { path } from "ramda";
 
 const months = [
   "jan",
