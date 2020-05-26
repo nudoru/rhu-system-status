@@ -11,6 +11,8 @@
     <Table
       alignTop
       sizeAuto
+      zebraRows
+      hoverRows
       :data="getSystems"
       :format="[
         {
@@ -19,7 +21,6 @@
           path: ['lastIncident', 'status'],
           sortable: true,
           sortDirection: 1,
-          sorted: true,
         },
         {
           heading: 'System',
@@ -34,7 +35,8 @@
           path: ['lastIncident'],
           sortPath: ['lastIncident', 'date'],
           sortable: true,
-          sortDirection: 0,
+          sortDirection: -1,
+          sorted: true,
         },
       ]"
     >

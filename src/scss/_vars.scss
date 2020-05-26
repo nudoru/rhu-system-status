@@ -111,48 +111,48 @@ $neutral-color-light: $grey1;
 
 // Background colors
 $statusColor: (
-        'neutral': $neutral-color-light,
-        'primary': $primary-color,
-        'secondary': $secondary-color,
-        'white': #fff,
-        'info': $blue,
-        'success': $green-shade1,
-        'warning': $yelloworange,
-        'danger': $red-shade1,
+  "neutral": $neutral-color-light,
+  "primary": $primary-color,
+  "secondary": $secondary-color,
+  "white": #fff,
+  "info": $blue,
+  "success": $green-shade1,
+  "warning": $yelloworange,
+  "danger": $red-shade1,
 );
 
 $statusColorPale: (
-        'neutral': $neutral-color-light,
-        'primary': $primary-color-light,
-        'secondary': $secondary-color-light,
-        'white': $neutral-color-light,
-        'info': $blue-tint3,
-        'success': $green-tint3,
-        'warning': $yelloworange-tint2,
-        'danger': $red-tint3,
+  "neutral": $neutral-color-light,
+  "primary": $primary-color-light,
+  "secondary": $secondary-color-light,
+  "white": $neutral-color-light,
+  "info": $blue-tint3,
+  "success": $green-tint3,
+  "warning": $yelloworange-tint2,
+  "danger": $red-tint3,
 );
 
 $statusColorBlack: (
-        'neutral': $neutral-color-dark,
-        'primary': $primary-color-dark,
-        'secondary': $secondary-color-dark,
-        'white': $neutral-color-dark,
-        'info': $blue-shade3,
-        'success': $green-shade3,
-        'warning': $orange-shade3,
-        'danger': $red-shade3,
+  "neutral": $neutral-color-dark,
+  "primary": $primary-color-dark,
+  "secondary": $secondary-color-dark,
+  "white": $neutral-color-dark,
+  "info": $blue-shade3,
+  "success": $green-shade3,
+  "warning": $orange-shade3,
+  "danger": $red-shade3,
 );
 
 // Font colors on top of status
 $statusTextColor: (
-        'neutral': $neutral-color-dark,
-        'primary': #fff,
-        'secondary': #fff,
-        'white': $grey8,
-        'info': #fff,
-        'success': #fff,
-        'warning': $orange-shade3,
-        'danger': #fff,
+  "neutral": $neutral-color-dark,
+  "primary": #fff,
+  "secondary": #fff,
+  "white": $grey8,
+  "info": #fff,
+  "success": #fff,
+  "warning": $orange-shade3,
+  "danger": #fff,
 );
 
 // https://www.modularscale.com/?1,1170,12&em&1.35
@@ -196,20 +196,20 @@ $container-width-max: 1140px;
 
 // Used by the mq mixin
 $breakpoints: (
-        'phone': 400px,
-        'phone-wide': 480px,
-        'phablet': 560px,
-        'tablet-small': 640px,
-        'tablet': 768px,
-        'tablet-wide': 1024px,
-        'desktop': 1248px,
-        'desktop-wide': 1440px,
+  "phone": 400px,
+  "phone-wide": 480px,
+  "phablet": 560px,
+  "tablet-small": 640px,
+  "tablet": 768px,
+  "tablet-wide": 1024px,
+  "desktop": 1248px,
+  "desktop-wide": 1440px,
 );
 
 // TYPOGRAPHY ------------------------------------------------------------------------------------------------
 
-$font-family-headings: 'Red Hat Display', sans-serif;
-$font-family-base: 'Red Hat Text', sans-serif;
+$font-family-headings: "Red Hat Display", sans-serif;
+$font-family-base: "Red Hat Text", sans-serif;
 
 $link-color: $blue;
 $link-decoration: none;
@@ -264,7 +264,7 @@ $card-radius: $radius-base;
 
 $table-cell-padding: $base-value;
 $table-color-row-zebra: rgba($neutral-color-dark, 0.07);
-$table-color-column-zebra: rgba(white, 0.3);
+$table-color-column-zebra: rgba($neutral-color-dark, 0.03);
 
 // Class Props ------------------------------------------------------------------------------------------------
 

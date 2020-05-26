@@ -32,8 +32,10 @@
 
 <script>
 /*
-  BUG
-  - if sortDirection isn't present in the format data, arrows don't work correctly on the header when sort clicks. Add validation step?
+  TODO
+  BUG - if sortDirection isn't present in the format data, arrows don't work correctly on the header when sort clicks. Add validation step?
+
+  OPT - Merge applyDefaultSort and onSortHeader click
   */
 
 import { path } from "ramda";
@@ -51,6 +53,18 @@ export default {
       type: Array,
       required: true,
     },
+    zebraRows: {
+      type: Boolean,
+      default: false,
+    },
+    zebraCols: {
+      type: Boolean,
+      default: false,
+    },
+    hoverRows: {
+      type: Boolean,
+      default: false,
+    },
     alignTop: {
       type: Boolean,
       default: false,
@@ -62,8 +76,8 @@ export default {
   },
   data() {
     return {
-      tableData: this.data,
       dataFormat: this.format, // needs to have sort applied from format
+      tableData: this.applyDefaultSort(this.data),
       dataFilter: null,
     };
   },
@@ -74,6 +88,9 @@ export default {
         "table",
         this.alignTop ? "top" : "",
         this.sizeAuto ? "auto" : "",
+        this.zebraRows ? "zebra-rows" : "",
+        this.zebraCols ? "zebra-cols" : "",
+        this.hoverRows ? "hover-rows" : "",
       ].join(" ");
     },
     headerCls(col) {
@@ -97,6 +114,21 @@ export default {
         return path(col.path, cell);
       }
       return cell;
+    },
+    applyDefaultSort(data) {
+      // accessing prop not data because running in data init fn
+      let firstSortHeader = this.format.reduce((acc, x, idx) => {
+        if (x.sorted && acc === -1) {
+          acc = idx;
+        }
+        return acc;
+      }, -1);
+
+      return sortObjectArray(
+        this.format[firstSortHeader].sortPath,
+        this.format[firstSortHeader].sortDirection,
+        data
+      );
     },
     onSortHeaderClick(colIdx) {
       let column = this.dataFormat[colIdx];
