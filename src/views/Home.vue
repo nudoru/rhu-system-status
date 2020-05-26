@@ -52,10 +52,10 @@
         </router-link>
       </template>
       <template v-slot:lastupdate="{ value }">
-        <p>{{ value.message }}</p>
-        <Badge status="neutral" glyph="far fa-calendar-alt">{{
+        <Badge status="secondary" glyph="far fa-calendar-alt">{{
           value.date
         }}</Badge>
+        <p>{{ value.message }}</p>
       </template>
     </Table>
   </div>

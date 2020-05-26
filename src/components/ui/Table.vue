@@ -34,8 +34,6 @@
 /*
   TODO
   BUG - if sortDirection isn't present in the format data, arrows don't work correctly on the header when sort clicks. Add validation step?
-
-  OPT - Merge applyDefaultSort and onSortHeader click
   */
 
 import { path } from "ramda";
@@ -76,7 +74,7 @@ export default {
   },
   data() {
     return {
-      dataFormat: this.format, // needs to have sort applied from format
+      dataFormat: this.format,
       tableData: this.applyDefaultSort(this.data),
       dataFilter: null,
     };
@@ -115,6 +113,22 @@ export default {
       }
       return cell;
     },
+    applySort(column, data) {
+      let sortPath = column.hasOwnProperty("sortPath")
+        ? column.sortPath
+        : column.hasOwnProperty("path")
+        ? column.path
+        : null;
+
+      if (!sortPath) {
+        console.error(
+          `There is no path or sortPath for column ${column.heading}!`
+        );
+        return;
+      }
+
+      return sortObjectArray(sortPath, column.sortDirection, data);
+    },
     applyDefaultSort(data) {
       // accessing prop not data because running in data init fn
       let firstSortHeader = this.format.reduce((acc, x, idx) => {
@@ -123,12 +137,7 @@ export default {
         }
         return acc;
       }, -1);
-
-      return sortObjectArray(
-        this.format[firstSortHeader].sortPath,
-        this.format[firstSortHeader].sortDirection,
-        data
-      );
+      return this.applySort(this.format[firstSortHeader], data);
     },
     onSortHeaderClick(colIdx) {
       let column = this.dataFormat[colIdx];
@@ -145,25 +154,7 @@ export default {
           column.sortDirection = 1;
         }
       }
-
-      let sortPath = column.hasOwnProperty("sortPath")
-        ? column.sortPath
-        : column.hasOwnProperty("path")
-        ? column.path
-        : null;
-
-      if (!sortPath) {
-        console.error(
-          `There is no path or sortPath for column ${column.heading}!`
-        );
-        return;
-      }
-
-      this.tableData = sortObjectArray(
-        sortPath,
-        column.sortDirection,
-        this.tableData
-      );
+      this.tableData = this.applySort(column, this.tableData);
     },
     clearColumnSorts() {
       this.dataFormat = this.dataFormat.map((col) => {
@@ -173,9 +164,6 @@ export default {
         return col;
       });
     },
-  },
-  mounted() {
-    // console.log(this.format);
   },
 };
 </script>
