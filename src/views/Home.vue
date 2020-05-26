@@ -16,7 +16,7 @@
         {
           heading: 'Status',
           slot: 'status',
-          accessor: (value) => value.lastIncident.status,
+          path: ['lastIncident', 'status'],
           sortable: true,
           sortDirection: 1,
           sorted: true,
@@ -24,15 +24,17 @@
         {
           heading: 'System',
           slot: 'system',
-          accessor: (value) => value,
+          sortPath: ['name'],
+          sortable: true,
+          sortDirection: 0,
         },
         {
           heading: 'Last Update',
           slot: 'lastupdate',
-          accessor: (value) => value.lastIncident,
+          path: ['lastIncident'],
+          sortPath: ['lastIncident', 'date'],
           sortable: true,
-          sortDirection: 1,
-          sorted: false,
+          sortDirection: 0,
         },
       ]"
     >

@@ -45,14 +45,20 @@
       color: $primary-color-dark
       border-bottom: 1px solid $primary-color
       &.sortable
+        @include transition-all()
+        @extend .u-unselectable
         cursor: pointer
         color: $primary-color
-        background-color: $primary-color-light
+        font-weight: $font-weight-bold
         .sort-icon
           margin-left: $base-value
+        &:hover
+          background-color: $primary-color-light
       &.sorted
         color: #fff
         background-color: $primary-color
+        &:hover
+          background-color: $primary-color-dark
 
   tfoot
     th

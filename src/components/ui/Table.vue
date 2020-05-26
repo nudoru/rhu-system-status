@@ -7,8 +7,13 @@
         <th
           scope="col"
           :class="headerCls(col)"
-          v-for="(col, idx) in format"
+          v-for="(col, idx) in dataFormat"
           :key="idx"
+          @click="
+            (evt) => {
+              col.sortable ? onSortHeaderClick(idx) : false;
+            }
+          "
         >
           {{ col.heading }}
           <i :class="headerIcon(col)" v-if="col.sortable"></i>
@@ -16,9 +21,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(rowData, ridx) in data" :key="ridx">
-        <td v-for="(col, cidx) in format" :key="cidx">
-          <slot :name="col.slot" :value="col.accessor(rowData)" />
+      <tr v-for="(rowData, ridx) in tableData" :key="ridx">
+        <td v-for="(col, cidx) in dataFormat" :key="cidx">
+          <slot :name="col.slot" :value="getCellValue(col, rowData)" />
         </td>
       </tr>
     </tbody>
@@ -27,42 +32,22 @@
 
 <script>
 /*
+  BUG
+  - if sortDirection isn't present in the format data, arrows don't work correctly on the header when sort clicks. Add validation step?
+  */
 
-- hover on sortable header
-- click on sortable header
-- col sort fn
-
-
-    https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
-    https://listjs.com/
-    https://github.com/nwoltman/string-natural-compare
-    https://www.npmjs.com/package/fast-sort
-    http://numeraljs.com/
-
-    Input is object array
-    data obj listing
-        object key
-        column heading
-        sortable true/false
-        sorted true/false
-            asc/dsc
-        data type? to help w/ sorting?
-        sort fn?
-        custom render fn: cellData => {}
-         sortChanged callback? or event?
-     */
+import { path } from "ramda";
+import { sortObjectArray } from "../../libs/sortObjectArray";
 
 export default {
   name: "Table",
   components: {},
   props: {
     data: {
-      // Array of objects
       type: Array,
       required: true,
     },
     format: {
-      // Array of objects
       type: Array,
       required: true,
     },
@@ -76,7 +61,11 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      tableData: this.data,
+      dataFormat: this.format, // needs to have sort applied from format
+      dataFilter: null,
+    };
   },
   computed: {},
   methods: {
@@ -93,14 +82,64 @@ export default {
       );
     },
     headerIcon(col) {
-      if (col.sortable && col.sorted && col.sortDirection === 1) {
-        return "fas fa-chevron-up  sort-icon";
-      } else if (col.sortable && col.sorted && col.sortDirection === -1) {
+      // BUG, if sortDirection not present, then it's always up
+      if (col.sortable && col.sorted && col.sortDirection === -1) {
+        return "fas fa-chevron-up sort-icon";
+      } else if (col.sortable && col.sorted && col.sortDirection === 1) {
         return "fas fa-chevron-down sort-icon";
       } else if (col.sortable) {
         return "far fa-circle sort-icon";
       }
       return "";
+    },
+    getCellValue(col, cell) {
+      if (col.hasOwnProperty("path") && col.path !== null) {
+        return path(col.path, cell);
+      }
+      return cell;
+    },
+    onSortHeaderClick(colIdx) {
+      let column = this.dataFormat[colIdx];
+      if (column.sorted) {
+        column.sortDirection = column.sortDirection === 1 ? -1 : 1;
+      } else {
+        this.clearColumnSorts();
+        column.sorted = true;
+        if (
+          !column.hasOwnProperty("sort sortDirection") ||
+          column.sortDirection === 0 ||
+          column.sortDirection === null
+        ) {
+          column.sortDirection = 1;
+        }
+      }
+
+      let sortPath = column.hasOwnProperty("sortPath")
+        ? column.sortPath
+        : column.hasOwnProperty("path")
+        ? column.path
+        : null;
+
+      if (!sortPath) {
+        console.error(
+          `There is no path or sortPath for column ${column.heading}!`
+        );
+        return;
+      }
+
+      this.tableData = sortObjectArray(
+        sortPath,
+        column.sortDirection,
+        this.tableData
+      );
+    },
+    clearColumnSorts() {
+      this.dataFormat = this.dataFormat.map((col) => {
+        if (col.sortable) {
+          col.sorted = false;
+        }
+        return col;
+      });
     },
   },
   mounted() {
