@@ -16,47 +16,58 @@ const months = [
   "dec",
 ];
 
-const isNumber = (aKey, bKey) =>
-  !isNaN(parseFloat(aKey)) && !isNaN(parseFloat(bKey));
+const dateSubstr = (str) => str.toLowerCase().substring(0, 3);
 
 // In sample data the dates are formatted: "November 5, 2019 3:41 AM"
 // moment 'LLL' format
-const isDate = (aKey, bKey) =>
-  months.indexOf(aKey.toLowerCase().substring(0, 3)) != -1 &&
-  months.indexOf(bKey.toLowerCase().substring(0, 3)) != -1;
+const areDateStrings = (aKey, bKey) =>
+  months.indexOf(dateSubstr(aKey)) != -1 &&
+  months.indexOf(dateSubstr(bKey)) != -1;
 
-export const sortObjectArray = (sortPath, direction, arry) => {
-  return arry.sort((a, b) => {
+const areNumbers = (aKey, bKey) =>
+  !isNaN(parseFloat(aKey)) && !isNaN(parseFloat(bKey));
+
+const sortFunction = (direction, aKey, bKey) => {
+  if (direction === 1) {
+    if (aKey < bKey) return -1;
+    if (aKey > bKey) return 1;
+  } else if (direction === -1) {
+    if (aKey < bKey) return 1;
+    if (aKey > bKey) return -1;
+  }
+  return 0;
+};
+
+const dateSortFunction = (direction, aKey, bKey) => {
+  aKey = moment(aKey, "LLL");
+  bKey = moment(bKey, "LLL");
+  if (direction === 1) {
+    if (aKey.isBefore(bKey)) return -1;
+    if (aKey.isAfter(bKey)) return 1;
+  } else if (direction === -1) {
+    if (aKey.isBefore(bKey)) return 1;
+    if (aKey.isAfter(bKey)) return -1;
+  }
+  return 0;
+};
+
+export const sortObjectArray = (sortPath, direction, arry) =>
+  arry.sort((a, b) => {
     let aKey = path(sortPath, a),
       bKey = path(sortPath, b);
 
-    if (isNumber(aKey, bKey)) {
+    if (areNumbers(aKey, bKey)) {
       // Keep numbers from being compared as strings
       aKey = parseFloat(aKey);
       bKey = parseFloat(bKey);
     } else {
-      if (isDate(aKey, bKey)) {
-        aKey = moment(aKey, "LLL");
-        bKey = moment(bKey, "LLL");
-        if (direction === 1) {
-          if (aKey.isBefore(bKey)) return -1;
-          if (aKey.isAfter(bKey)) return 1;
-        } else {
-          if (aKey.isBefore(bKey)) return 1;
-          if (aKey.isAfter(bKey)) return -1;
-        }
-        return;
+      // Handle dates specially
+      // Nested to keep from checking isNumber again
+      if (areDateStrings(aKey, bKey)) {
+        return dateSortFunction(direction, aKey, bKey);
       }
     }
 
     // Numbers and strings
-    if (direction === 1) {
-      if (aKey < bKey) return -1;
-      if (aKey > bKey) return 1;
-    } else {
-      if (aKey < bKey) return 1;
-      if (aKey > bKey) return -1;
-    }
-    return 0;
+    return sortFunction(direction, aKey, bKey);
   });
-};
