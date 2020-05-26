@@ -1,20 +1,5 @@
 .app-navigation-primary {
-  @include transition-all();
   position: relative;
-
-  &.open {
-    transform: translateX(-300px);
-    .mobile-toggle {
-      transform: translateX(300px);
-    }
-  }
-
-  &.closed {
-    transform: translateX(0);
-    .mobile-toggle {
-      transform: translateX(0);
-    }
-  }
 
   // button
   .mobile-toggle {
@@ -33,6 +18,22 @@
     position: relative;
     margin: 0;
     border-bottom: none;
+
+    .nav-mobile-header {
+      display: none;
+      position: relative;
+      padding: $base-value;
+      background-color: $primary-color-dark;
+      text-align: right;
+      margin-bottom: $base-value;
+    }
+
+    .nav-mobile-toggle {
+      position: relative;
+      border: none;
+      font-size: 1rem;
+      padding: $base-value;
+    }
 
     ul {
       @include transition-all();
@@ -83,26 +84,35 @@
   }
 
   @include mq("tablet-wide", max) {
-    position: fixed;
-    top: 0;
-    right: 0;
-
     .mobile-toggle {
       display: block;
       position: relative;
-      z-index: 1;
     }
 
     .navigation-list {
-      position: absolute;
-      top: 51px;
-      left: 50px;
+      @include transition-all();
+      position: fixed;
+      top: 0;
+      right: 0px;
+      height: 100vh;
       width: 300px;
       background: linear-gradient(-20deg, $grey7, $grey8);
-      height: calc(100vh - 51px);
+      z-index: 1;
       box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.05),
         4px 23px 40px -15px rgba(0, 0, 0, 0.15),
         8px 30px 64px rgba(0, 0, 0, 0.1);
+
+      .nav-mobile-header {
+        display: block;
+      }
+
+      &.open {
+        transform: translateX(0px);
+      }
+
+      &.closed {
+        transform: translateX(300px);
+      }
 
       ul {
         width: 100%;

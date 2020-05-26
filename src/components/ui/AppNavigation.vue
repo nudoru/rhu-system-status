@@ -1,13 +1,17 @@
 <style lang="scss" scoped></style>
 
 <template>
-  <div :class="navCls">
+  <div class="app-navigation-primary">
     <button class="mobile-toggle" @click="toggleMobileNav">
-      <i v-if="!mobileNavOpen" class="fa fa-bars"></i>
-      <i v-if="mobileNavOpen" class="fa fa-times"></i>
+      <i class="fa fa-bars"></i>
     </button>
-    <nav class="navigation-list">
-      <ul class="">
+    <nav :class="navCls">
+      <div class="nav-mobile-header">
+        <button class="nav-mobile-toggle" @click="toggleMobileNav">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <ul>
         <li class="note">
           <i class="fa fa-info-circle"></i>Nav is for dev only
         </li>
@@ -52,10 +56,9 @@ export default {
       return this.splitRoute(this.$route.path);
     },
     navCls: function () {
-      return [
-        "app-navigation-primary",
-        this.mobileNavOpen ? "open" : "closed",
-      ].join(" ");
+      return ["navigation-list", this.mobileNavOpen ? "open" : "closed"].join(
+        " "
+      );
     },
   },
 };

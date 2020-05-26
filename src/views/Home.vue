@@ -55,7 +55,7 @@
         <Badge status="secondary" glyph="far fa-calendar-alt">{{
           value.date
         }}</Badge>
-        <p>{{ value.message }}</p>
+        <p class="u-margin-top">{{ value.message }}</p>
       </template>
     </Table>
   </div>
