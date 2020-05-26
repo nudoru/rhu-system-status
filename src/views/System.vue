@@ -17,20 +17,41 @@
       >
       <hr />
       <h2>Incident Log</h2>
-      <table class="table auto top">
-        <tbody>
-          <tr v-for="(incident, idx) in systemDetails.incidents" :key="idx">
-            <td>
-              <Badge
-                :status="statusCodeToString(incident.status)"
-                :glyph="statusCodeToGlyph(incident.status)"
-                >{{ incident.date }}</Badge
-              >
-            </td>
-            <td>{{ incident.message }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <Table
+        alignTop
+        sizeAuto
+        zebraRows
+        hoverRows
+        :data="systemDetails.incidents"
+        :format="[
+          {
+            heading: 'Status',
+            slot: 'status',
+            path: null,
+            sortPath: ['date'],
+            sortable: true,
+            sorted: true,
+            sortDirection: -1,
+          },
+          {
+            heading: 'Last Update',
+            slot: 'lastupdate',
+            path: ['message'],
+          },
+        ]"
+      >
+        <template v-slot:status="{ value }">
+          <Badge
+            :status="statusCodeToString(value.status)"
+            :glyph="statusCodeToGlyph(value.status)"
+            >{{ value.date }}</Badge
+          >
+        </template>
+        <template v-slot:lastupdate="{ value }">
+          <p>{{ value }}</p>
+        </template>
+      </Table>
     </div>
   </div>
 </template>
@@ -40,12 +61,13 @@ import { mapGetters } from "vuex";
 
 import Icon from "@/components/ui/Icon";
 import Badge from "@/components/ui/Badge";
+import Table from "@/components/ui/Table";
 
 import { statusCodeToGlyph, statusCodeToString } from "../libs/utilities";
 
 export default {
   name: "System",
-  components: { Icon, Badge },
+  components: { Icon, Badge, Table },
   props: {
     p: {
       type: Boolean,

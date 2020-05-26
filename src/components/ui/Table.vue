@@ -36,6 +36,31 @@
   BUG - if sortDirection isn't present in the format data, arrows don't work correctly on the header when sort clicks. Add validation step?
   */
 
+/*
+Format Data Example
+  [{
+    heading: 'Column Heading',
+    slot: 'template_slot_name_for_custom_formatting',
+      MUST match a template slot name
+    path: null or ['path','to','data'],
+      null passes entire row to the template as value for more complex cell rendering
+      path allows complex, nested objects to be passed. Uses Ramda path to navigate.
+    sortable: true if able to sort
+    sortPath: ['path','to','data'],
+      REQUIRED - path allows complex, nested objects to be searched rather than just the top level key. Uses Ramda path to navigate.
+    sortDirection: -1 descending or 1 ascending
+      REQUIRED - default sort direction
+    sorted: true if sorted by default. only one in a table
+  }, ...]
+
+
+Example cell slot
+  value will be the whole row if path is null or the data you pick with path
+  <template v-slot:template_slot_name="{ value }">
+    <p>{{ value }}</p>
+  </template>
+ */
+
 import { path } from "ramda";
 import { sortObjectArray } from "../../libs/sortObjectArray";
 
@@ -130,6 +155,8 @@ export default {
       return sortObjectArray(sortPath, column.sortDirection, data);
     },
     applyDefaultSort(data) {
+      console.log(data);
+
       // accessing prop not data because running in data init fn
       let firstSortHeader = this.format.reduce((acc, x, idx) => {
         if (x.sorted && acc === -1) {
@@ -137,7 +164,10 @@ export default {
         }
         return acc;
       }, -1);
-      return this.applySort(this.format[firstSortHeader], data);
+      if (firstSortHeader !== -1) {
+        return this.applySort(this.format[firstSortHeader], data);
+      }
+      return data;
     },
     onSortHeaderClick(colIdx) {
       let column = this.dataFormat[colIdx];
