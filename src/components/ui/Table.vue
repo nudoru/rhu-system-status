@@ -155,8 +155,6 @@ export default {
       return sortObjectArray(sortPath, column.sortDirection, data);
     },
     applyDefaultSort(data) {
-      console.log(data);
-
       // accessing prop not data because running in data init fn
       let firstSortHeader = this.format.reduce((acc, x, idx) => {
         if (x.sorted && acc === -1) {
