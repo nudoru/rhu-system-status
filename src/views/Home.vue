@@ -1,9 +1,4 @@
-<style lang="scss" scoped>
-.system-name {
-  font-weight: $font-weight-bold;
-  font-size: 1.2rem;
-}
-</style>
+<style lang="scss" scoped></style>
 
 <template>
   <div class="container">
@@ -47,7 +42,7 @@
         />
       </template>
       <template v-slot:system="{ value }">
-        <router-link class="system-name" :to="'system/' + value.id">
+        <router-link class="text-ms2 text-bold" :to="'system/' + value.id">
           {{ value.name }}
         </router-link>
       </template>
@@ -55,7 +50,7 @@
         <Badge status="secondary" glyph="far fa-calendar-alt">{{
           value.date
         }}</Badge>
-        <p class="u-margin-top">{{ value.message }}</p>
+        <p class="mt-ms0 mb-0">{{ value.message }}</p>
       </template>
     </Table>
   </div>

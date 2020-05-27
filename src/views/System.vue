@@ -49,7 +49,7 @@
           >
         </template>
         <template v-slot:lastupdate="{ value }">
-          <p>{{ value }}</p>
+          <p class="mb-0">{{ value }}</p>
         </template>
       </Table>
     </div>
